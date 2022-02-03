@@ -1,3 +1,4 @@
+using dotnet_rpg_practice.Dtos.Character;
 using dotnet_rpg_practice.Models;
 using dotnet_rpg_practice.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,17 +10,17 @@ namespace dotnet_rpg_practice.Controllers;
 public class CharacterController : ControllerBase
 {
     private readonly ILogger<CharacterController> _logger;
-    private readonly ICharacterService _service;
+    private readonly ICharacterService _characterService;
 
-    public CharacterController(ILogger<CharacterController> logger, ICharacterService service)
+    public CharacterController(ILogger<CharacterController> logger, ICharacterService characterService)
     {
-        _service = service;
+        _characterService = characterService;
         _logger = logger;
     }
 
     [HttpGet]
-    public ActionResult<ServiceResponse<Character>> Get()
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> Get()
     {
-        return Ok(_service.GetAllCharacters());
+        return Ok(await _characterService.GetAllCharacters());
     }
 }
