@@ -18,9 +18,33 @@ public class CharacterController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> Get()
+    [HttpGet("{id}")]
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> GetCharacterById(int id)
+    {
+        return Ok(await _characterService.GetCharacterById(id));
+    }
+
+    [HttpGet("All")]
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> GetAllCharacters()
     {
         return Ok(await _characterService.GetAllCharacters());
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> AddCharacter(AddCharacterDto newCharacter)
+    {
+        return Ok(await _characterService.AddCharacter(newCharacter));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> UpdateCharacter(int id, AddCharacterDto updateCharacter)
+    {
+        return Ok(await _characterService.UpdateCharacter(id, updateCharacter));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<List<ServiceResponse<GetCharacterDto>>>> RemoveCharacterById(int id)
+    {
+        return Ok(await _characterService.RemoveCharacterById(id));
     }
 }
